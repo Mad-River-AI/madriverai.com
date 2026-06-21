@@ -1,0 +1,21 @@
+---
+import OgImage from "../../../components/OgImage.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<OgImage
+  title={post.data.title}
+  subtitle={post.data.summary}
+  eyebrow={post.data.tags?.[0] ?? "blog"}
+  date={post.data.date.toISOString().slice(0, 10)}
+/>

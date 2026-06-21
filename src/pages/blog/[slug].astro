@@ -1,0 +1,89 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateStr = post.data.date.toISOString().slice(0, 10);
+const tagList = post.data.tags ?? [];
+---
+
+<Base
+  title={`${post.data.title} — Mad River AI`}
+  description={post.data.summary}
+  ogTitle={post.data.title}
+  ogSubtitle={post.data.summary}
+  ogDate={dateStr}
+  ogEyebrow={tagList[0] ?? "blog"}
+>
+  <article class="px-6 md:px-12 py-20 max-w-3xl">
+    <p class="font-mono text-sm tracking-widest text-amber-soft uppercase mb-6">
+      {tagList.length > 0 ? tagList.join(" · ") : "blog"} · {dateStr}
+    </p>
+    <h1 class="font-display text-4xl md:text-5xl font-semibold leading-tight mb-8">
+      <span class="gradient-text">{post.data.title.split(" — ")[0] ?? post.data.title}</span><br />
+      <span class="text-ink-50">{(post.data.title.split(" — ")[1] ?? "").trim()}</span>
+    </h1>
+
+    <p class="text-xl text-ink-200 leading-relaxed mb-6">
+      {post.data.summary}
+    </p>
+
+    <div class="prose-content">
+      <Content />
+    </div>
+
+    <div class="mt-12 flex flex-wrap gap-4">
+      <a href="https://github.com/Mad-River-AI/osint-framework" class="btn-primary">
+        View on GitHub →
+      </a>
+      <a href="/blog" class="btn-ghost">All posts</a>
+    </div>
+  </article>
+</Base>
+
+<style is:global>
+  .prose-content h2 {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: var(--color-ink-50);
+  }
+  .prose-content p {
+    color: var(--color-ink-200);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .prose-content strong {
+    color: var(--color-ink-50);
+  }
+  .prose-content em {
+    color: var(--color-amber-soft);
+    font-style: normal;
+  }
+  .prose-content code {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  .prose-content ul {
+    color: var(--color-ink-200);
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .prose-content ul li {
+    list-style: disc;
+    margin-bottom: 0.5rem;
+  }
+</style>

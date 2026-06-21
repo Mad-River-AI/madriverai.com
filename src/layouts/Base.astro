@@ -6,12 +6,34 @@ import OrbitalNav from "../components/OrbitalNav.astro";
 export interface Props {
   title?: string;
   description?: string;
+  // OG / Twitter card props. If any of these are present, we render
+  // an SVG OG image at build time and link to it in the meta tags.
+  ogTitle?: string;
+  ogSubtitle?: string;
+  ogDate?: string;
+  ogEyebrow?: string;
 }
 
 const {
   title = "Mad River AI",
   description = "Specialized investigation and research agents — automating knowledge work with provenance baked in.",
+  ogTitle,
+  ogSubtitle,
+  ogDate,
+  ogEyebrow,
 } = Astro.props;
+
+const fullTitle = title === "Mad River AI" ? title : `${title} — Mad River AI`;
+const ogImageSlug = ogTitle ? slugify(ogTitle) : "default";
+const ogImagePath = ogTitle ? `/og/${slugify(ogTitle)}` : "/og/default";
+
+function slugify(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 60);
+}
 ---
 
 <!doctype html>
@@ -28,7 +50,25 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
-    <title>{title}</title>
+
+    <title>{fullTitle}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={ogTitle ?? title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={`https://madriverai.com${ogImagePath}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogTitle ?? title} />
+    <meta property="og:site_name" content="Mad River AI" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle ?? title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`https://madriverai.com${ogImagePath}`} />
   </head>
   <body class="min-h-screen overflow-x-hidden bg-noise">
     <KnowledgeGraph />
