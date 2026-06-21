@@ -1,0 +1,73 @@
+---
+import Base from "../layouts/Base.astro";
+
+const projects = [
+  {
+    title: "osint-framework",
+    href: "https://github.com/Mad-River-AI/osint-framework",
+    blurb: "Modular research framework — agents, tools, data pipelines. The open-source core of Mad River AI. MIT licensed.",
+    tags: ["python", "framework", "MIT"],
+    status: "v0.1",
+    year: "2026",
+  },
+  {
+    title: "agent-specs",
+    href: "https://github.com/Mad-River-AI/agent-specs",
+    blurb: "Canonical agent definitions, prompts, and tool schemas. Specs-as-code: reviewable, reproducible, auditable.",
+    tags: ["specs", "prompts", "MIT"],
+    status: "drafting",
+    year: "2026",
+  },
+  {
+    title: "infra",
+    href: "https://github.com/Mad-River-AI/infra",
+    blurb: "Hosting, deployment, cron configs, runbooks. The unglamorous repo where the \"make it actually run\" work lives.",
+    tags: ["ops", "self-hosted", "MIT"],
+    status: "early",
+    year: "2026",
+  },
+];
+---
+
+<Base title="Projects — Mad River AI">
+  <section class="px-6 md:px-12 py-20 max-w-5xl">
+    <p class="font-mono text-sm tracking-widest text-amber-soft uppercase mb-6">
+      Projects
+    </p>
+    <h1 class="font-display text-4xl md:text-6xl font-semibold leading-tight mb-12">
+      <span class="gradient-text">The work,</span>
+      <span class="text-ink-50"> in public.</span>
+    </h1>
+    <p class="text-xl text-ink-200 leading-relaxed mb-12 max-w-3xl">
+      Open-source core, public repos, public roadmaps. The
+      interesting bits (proprietary data sources, customer UX) live
+      in private repos and ship as managed services later.
+    </p>
+
+    <div class="space-y-6">
+      {projects.map((p) => (
+        <a
+          href={p.href}
+          target="_blank"
+          rel="noopener"
+          class="block glass-strong rounded-3xl p-8 md:p-10 hover:border-amber-glow/40 transition-colors"
+        >
+          <div class="flex items-baseline gap-4 text-sm text-ink-400 font-mono mb-3">
+            <span>{p.year}</span>
+            <span>·</span>
+            <span>{p.status}</span>
+          </div>
+          <h2 class="font-display text-2xl md:text-3xl mb-3">{p.title}</h2>
+          <p class="text-ink-200 leading-relaxed mb-4 max-w-2xl">{p.blurb}</p>
+          <div class="flex flex-wrap gap-2">
+            {p.tags.map((t) => (
+              <span class="text-xs font-mono uppercase tracking-wider px-2 py-1 rounded border border-ink-600 text-ink-200">
+                {t}
+              </span>
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

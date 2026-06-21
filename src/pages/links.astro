@@ -1,0 +1,72 @@
+---
+import Base from "../layouts/Base.astro";
+
+const groups = [
+  {
+    heading: "Code",
+    links: [
+      { label: "github.com/Mad-River-AI", href: "https://github.com/Mad-River-AI", note: "the org" },
+      { label: "osint-framework", href: "https://github.com/Mad-River-AI/osint-framework", note: "v0.1 — MIT" },
+      { label: "agent-specs", href: "https://github.com/Mad-River-AI/agent-specs", note: "specs-as-code" },
+      { label: "infra", href: "https://github.com/Mad-River-AI/infra", note: "ops & deploy" },
+    ],
+  },
+  {
+    heading: "Domain",
+    links: [
+      { label: "madriverai.com", href: "https://madriverai.com", note: "this site" },
+      { label: "ops@madriverai.com", href: "mailto:ops@madriverai.com", note: "general" },
+    ],
+  },
+  {
+    heading: "About us",
+    links: [
+      { label: "Avilla, Indiana", href: null, note: "home" },
+      { label: "est. 2026", href: null, note: "year" },
+    ],
+  },
+];
+---
+
+<Base title="Links — Mad River AI">
+  <section class="px-6 md:px-12 py-20 max-w-3xl">
+    <p class="font-mono text-sm tracking-widest text-amber-soft uppercase mb-6">
+      Links
+    </p>
+    <h1 class="font-display text-4xl md:text-6xl font-semibold leading-tight mb-12">
+      <span class="gradient-text">Where to find us.</span>
+    </h1>
+
+    <div class="space-y-12">
+      {groups.map((group) => (
+        <div>
+          <h2 class="font-mono text-sm tracking-widest text-amber-soft uppercase mb-4">
+            {group.heading}
+          </h2>
+          <ul class="space-y-2">
+            {group.links.map((link) => (
+              <li>
+                {link.href ? (
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener" : undefined}
+                    class="flex items-baseline justify-between border-b border-white/5 py-3 hover:border-amber-glow/40 transition-colors"
+                  >
+                    <span class="text-ink-50">{link.label}</span>
+                    <span class="text-sm text-ink-400 font-mono">{link.note}</span>
+                  </a>
+                ) : (
+                  <span class="flex items-baseline justify-between border-b border-white/5 py-3">
+                    <span class="text-ink-200">{link.label}</span>
+                    <span class="text-sm text-ink-400 font-mono">{link.note}</span>
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* === Mad River AI — design tokens === */
+@theme {
+  /* Deep navy backdrop with cyan/amber accents. Research-terminal vibe. */
+  --color-river-50:  #eaf6ff;
+  --color-river-100: #c5e1ff;
+  --color-river-200: #8fc5ff;
+  --color-river-300: #56a4f5;
+  --color-river-400: #2e84db;
+  --color-river-500: #1a64b8;
+  --color-river-600: #114a8d;
+  --color-river-700: #0c356b;
+  --color-river-800: #082346;
+  --color-river-900: #050f23;
+  --color-river-950: #020714;
+
+  --color-amber-glow: #f4b942;
+  --color-amber-soft: #f5d28a;
+
+  --color-ink-50: #f5f5f7;
+  --color-ink-200: #c7c9d1;
+  --color-ink-400: #7a7d8c;
+  --color-ink-600: #3a3d4b;
+  --color-ink-800: #161821;
+  --color-ink-900: #0b0c12;
+  --color-ink-950: #05060a;
+
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* === Base === */
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: var(--color-river-950);
+  color: var(--color-ink-50);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-amber-glow);
+  color: var(--color-river-950);
+}
+
+/* === Glassmorphism === */
+.glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.5);
+}
+
+.glass-strong {
+  background: linear-gradient(
+    135deg,
+    rgba(46, 132, 219, 0.14) 0%,
+    rgba(8, 35, 70, 0.32) 100%
+  );
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(143, 197, 255, 0.18);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+/* === Glow / accent === */
+.glow-amber {
+  text-shadow: 0 0 24px rgba(244, 185, 66, 0.45);
+}
+.glow-cyan {
+  text-shadow: 0 0 24px rgba(86, 164, 245, 0.45);
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, var(--color-amber-soft) 0%, var(--color-river-200) 60%, var(--color-amber-glow) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* === Knowledge-graph canvas === */
+#knowledge-graph {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* === Page chrome === */
+main, header, footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* === Subtle starfield / scanline noise === */
+.bg-noise {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+}
+
+/* === Link styles === */
+a {
+  color: var(--color-river-200);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--color-amber-glow);
+}
+
+/* === Headings === */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

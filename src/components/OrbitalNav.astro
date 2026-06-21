@@ -1,0 +1,264 @@
+---
+/**
+ * OrbitalNav — 3D revolving section directory.
+ *
+ * Six "planets" orbit a central hub. Each planet is a glassmorphic
+ * chip with an icon glyph and a label. Drag (or auto-rotate) to bring
+ * a planet forward; click to navigate.
+ *
+ * Sections are the site's primary destinations: home, projects,
+ * mission, blog, links, contact.
+ */
+const items = [
+  { id: "home",     label: "Home",     href: "/",          glyph: "◎" },
+  { id: "mission",  label: "Mission",  href: "/mission",   glyph: "✦" },
+  { id: "projects", label: "Projects", href: "/projects",  glyph: "▣" },
+  { id: "blog",     label: "Blog",     href: "/blog",      glyph: "✎" },
+  { id: "links",    label: "Links",    href: "/links",     glyph: "↗" },
+  { id: "contact",  label: "Contact",  href: "mailto:ops@madriverai.com", glyph: "✉" },
+];
+---
+
+<div class="orbital-nav" aria-label="Section directory">
+  <div class="orbital-stage">
+    <div class="orbital-hub" aria-hidden="true">
+      <div class="hub-core"></div>
+      <div class="hub-ring"></div>
+    </div>
+    <ul class="orbital-ring" role="list">
+      {items.map((item, i) => (
+        <li
+          class="orbital-planet"
+          style={`--i: ${i}; --total: ${items.length};`}
+        >
+          <a href={item.href} class="planet-card glass" data-id={item.id}>
+            <span class="planet-glyph" aria-hidden="true">{item.glyph}</span>
+            <span class="planet-label">{item.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .orbital-nav {
+    position: fixed;
+    top: 50%;
+    right: 1.5rem;
+    transform: translateY(-50%);
+    z-index: 30;
+    width: 220px;
+    height: 220px;
+    pointer-events: none;
+  }
+
+  .orbital-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 600px;
+    pointer-events: none;
+  }
+
+  .orbital-hub {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    pointer-events: none;
+  }
+  .hub-core {
+    position: absolute;
+    inset: 18px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 30%, var(--color-amber-glow), var(--color-river-600) 70%);
+    box-shadow:
+      0 0 30px rgba(244, 185, 66, 0.55),
+      inset 0 0 12px rgba(255, 255, 255, 0.4);
+  }
+  .hub-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    border: 1px dashed rgba(143, 197, 255, 0.45);
+    animation: hub-spin 18s linear infinite;
+  }
+  @keyframes hub-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .orbital-ring {
+    position: absolute;
+    inset: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transform-style: preserve-3d;
+    animation: orbit-spin 30s linear infinite;
+  }
+  @keyframes orbit-spin {
+    to { transform: rotateY(360deg); }
+  }
+
+  .orbital-planet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    transform:
+      translate(-50%, -50%)
+      rotateY(calc(360deg / var(--total) * var(--i)))
+      translateZ(160px);
+  }
+
+  .planet-card {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 84px;
+    height: 84px;
+    border-radius: 999px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    color: var(--color-ink-50);
+    text-decoration: none;
+    pointer-events: auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+  }
+  .planet-card:hover {
+    transform: translate(-50%, 50%) scale(1.08);
+    box-shadow:
+      0 0 30px rgba(86, 164, 245, 0.4),
+      0 1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 30px 60px -20px rgba(0, 0, 0, 0.6);
+    border-color: rgba(244, 185, 66, 0.6);
+  }
+  .planet-glyph {
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-amber-soft);
+  }
+  .planet-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-200);
+  }
+
+  /* Drag-to-rotate override of the auto-spin */
+  .orbital-ring.dragging {
+    animation-play-state: paused;
+  }
+
+  /* Smaller ring on mobile — collapse to a horizontal dock */
+  @media (max-width: 720px) {
+    .orbital-nav {
+      position: static;
+      width: 100%;
+      height: auto;
+      transform: none;
+      margin: 0.5rem auto 1.5rem;
+      padding: 0 1rem;
+    }
+    .orbital-stage {
+      width: 100%;
+      height: 96px;
+      perspective: none;
+    }
+    .orbital-hub, .hub-ring, .hub-core { display: none; }
+    .orbital-ring {
+      position: static;
+      display: flex;
+      gap: 0.75rem;
+      justify-content: space-between;
+      align-items: center;
+      transform: none !important;
+      animation: none !important;
+      height: 100%;
+    }
+    .orbital-planet {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      top: auto; left: auto;
+      transform: none !important;
+    }
+    .planet-card {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      bottom: auto; left: auto;
+      transform: none;
+    }
+    .planet-label { font-size: 0.6rem; }
+  }
+</style>
+
+<script>
+  // Drag-to-rotate the orbital ring. Pauses auto-spin while dragging,
+  // resumes after release. Mouse and touch both.
+  const ring = document.querySelector<HTMLElement>(".orbital-ring");
+  if (ring) {
+    let dragging = false;
+    let startX = 0;
+    let startRot = 0;
+    let currentRot = 0;
+
+    const getRot = () => {
+      const m = getComputedStyle(ring).transform;
+      if (m === "none") return 0;
+      // matrix(...) has 4th value = rotateY
+      const match = m.match(/matrix3d\(([^)]+)\)/);
+      if (match) {
+        const v = match[1].split(",").map(parseFloat);
+        // rotateY in a matrix3d: m[0]=cos, m[2]=-sin
+        return Math.atan2(-v[2], v[0]) * (180 / Math.PI);
+      }
+      return 0;
+    };
+
+    const apply = (deg: number) => {
+      ring.style.animation = "none";
+      ring.style.transform = `rotateY(${deg}deg)`;
+    };
+
+    const onDown = (e: MouseEvent | TouchEvent) => {
+      dragging = true;
+      ring.classList.add("dragging");
+      const x = "touches" in e ? e.touches[0].clientX : e.clientX;
+      startX = x;
+      startRot = getRot();
+    };
+    const onMove = (e: MouseEvent | TouchEvent) => {
+      if (!dragging) return;
+      const x = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const dx = x - startX;
+      currentRot = startRot + dx * 0.4;
+      apply(currentRot);
+    };
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      ring.classList.remove("dragging");
+      // resume auto-spin from current angle
+      ring.style.animation = "";
+      ring.style.transform = "";
+    };
+
+    ring.addEventListener("mousedown", onDown);
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    ring.addEventListener("touchstart", onDown, { passive: true });
+    window.addEventListener("touchmove", onMove, { passive: true });
+    window.addEventListener("touchend", onUp);
+  }
+</script>
