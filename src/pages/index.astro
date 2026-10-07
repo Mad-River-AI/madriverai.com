@@ -30,9 +30,9 @@ import Base from "../layouts/Base.astro";
         </a>
       </div>
       <div class="mt-16 flex items-center gap-6 text-sm text-ink-400 font-mono">
-        <span><span class="text-amber-glow">●</span> 4 tools shipped</span>
-        <span><span class="text-amber-glow">●</span> 2 agents in production</span>
-        <span><span class="text-amber-glow">●</span> 41 tests, 100% green</span>
+        <span><span class="text-amber-glow">●</span> 6 tools shipped</span>
+        <span><span class="text-amber-glow">●</span> 2 agents in beta</span>
+        <span><span class="text-amber-glow">●</span> 49 tests, 100% green</span>
       </div>
     </div>
   </section>
@@ -49,27 +49,28 @@ import Base from "../layouts/Base.astro";
     <div class="grid md:grid-cols-3 gap-6">
       <div class="glass rounded-2xl p-6">
         <div class="text-amber-glow font-mono text-xs tracking-widest uppercase mb-3">01</div>
-        <h3 class="text-lg font-display mb-2">Open-source core</h3>
+        <h3 class="text-lg font-display mb-2">OSINT Framework</h3>
         <p class="text-ink-200 text-sm leading-relaxed">
-          <a href="https://github.com/Mad-River-AI/osint-framework">osint-framework</a> — a Python
-          framework for orchestrating modular research tasks. MIT licensed.
+          <a href="https://github.com/Mad-River-AI/osint-framework">osint-framework</a> — modular
+          Python framework for OSINT investigations. Six tools, two agents, full provenance chain. MIT licensed.
         </p>
       </div>
       <div class="glass rounded-2xl p-6">
         <div class="text-amber-glow font-mono text-xs tracking-widest uppercase mb-3">02</div>
-        <h3 class="text-lg font-display mb-2">Specialized agents</h3>
+        <h3 class="text-lg font-display mb-2">Trend Oracle</h3>
         <p class="text-ink-200 text-sm leading-relaxed">
-          Literature research, domain recon, company investigation. Each
-          ships with a circuit breaker and a human review surface.
+          Enterprise trend prediction engine. We identify what's going
+          mainstream 4–12 weeks before it does — across TikTok, Instagram,
+          Reddit, and Twitter/X. <em class="text-amber-soft not-italic">Coming.</em>
         </p>
       </div>
       <div class="glass rounded-2xl p-6">
         <div class="text-amber-glow font-mono text-xs tracking-widest uppercase mb-3">03</div>
-        <h3 class="text-lg font-display mb-2">Hosted services</h3>
+        <h3 class="text-lg font-display mb-2">Intelligence-as-a-Service</h3>
         <p class="text-ink-200 text-sm leading-relaxed">
-          Coming. The interesting bits — proprietary data sources,
-          paid APIs, customer UX — live in private repos and ship as
-          managed services.
+          Custom OSINT investigations — due diligence, corporate intelligence,
+          domain recon — delivered as structured, sourced, auditable reports.
+          <em class="text-amber-soft not-italic">Contact us.</em>
         </p>
       </div>
     </div>
@@ -79,22 +80,19 @@ import Base from "../layouts/Base.astro";
     <h2 class="font-mono text-sm tracking-widest text-amber-soft uppercase mb-4">
       Recent
     </h2>
-    <a href="/blog/2026-06-21-v0-1-release" class="block glass-strong rounded-3xl p-8 md:p-10 hover:border-amber-glow/40 transition-colors">
+    <a href="/blog/2026-10-07-framework-alpha" class="block glass-strong rounded-3xl p-8 md:p-10 hover:border-amber-glow/40 transition-colors">
       <div class="flex items-baseline gap-4 text-sm text-ink-400 font-mono mb-3">
-        <span>2026-06-21</span>
+        <span>2026-10-07</span>
         <span>·</span>
         <span>announcement</span>
       </div>
       <h3 class="font-display text-2xl md:text-3xl mb-3">
-        osint-framework v0.1 — Knowledge & Research lanes
+        osint-framework — We open-sourced our investigation core
       </h3>
       <p class="text-ink-200 leading-relaxed max-w-2xl">
-        First runnable cut of the framework. Four tools (web_search,
-        web_fetch, paper_lookup, whois), two agents
-        (literature_research, domain_recon), a sqlite-backed finding
-        store, and a CLI. 41 tests, 100% green. Plus an honest
-        retrospective on the two-pass plan-review process that paid
-        for itself.
+        Six modular tools, two production agent specs, and the provenance-tagged
+        runner that ties them together. Here's what shipped and why we built it
+        this way.
       </p>
       <p class="text-amber-soft mt-6 font-mono text-sm">Read the post →</p>
     </a>
