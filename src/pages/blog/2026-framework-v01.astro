@@ -1,0 +1,272 @@
+---
+import Base from "../../layouts/Base.astro";
+
+const title = "osint-framework v0.1 is live";
+const date = "October 7, 2026";
+const description =
+  "We're releasing the core of our OSINT framework: a DAG task runner, domain recon, web search, and the beginnings of the trend prediction engine — 100 tests, 4 social platform tools, and a prediction pipeline that runs today.";
+---
+
+<Base
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogSubtitle="Four social platforms. One prediction engine."
+  ogDate={date}
+  ogEyebrow="Blog"
+>
+  <article class="blog-post">
+    <header>
+      <div class="eyebrow">BLOG — {date}</div>
+      <h1>{title}</h1>
+      <p class="lede">{description}</p>
+    </header>
+
+    <section>
+      <p>
+        Today we're open-sourcing the first real version of <a href="https://github.com/mad-river-ai/osint-framework">osint-framework</a> —
+        the Python framework that runs our OSINT agents and trend prediction pipeline.
+      </p>
+      <p>
+        This is not a demo. It runs. 100 tests pass. The prediction engine ingests signals
+        from Twitter, Reddit, Instagram, and TikTok, aggregates them, and produces a
+        <code>TrendPrediction</code> with confidence scores, saturation estimates, and an
+        LLM-generated intelligence note. The historical database stores predictions with
+        outcome tracking so the accuracy record is auditable from day one.
+      </p>
+    </section>
+
+    <section>
+      <h2>What's in v0.1</h2>
+      <p>
+        <strong>Core framework:</strong> A DAG-based task runner with topological ordering,
+        budget enforcement (tokens, seconds, USD), and provenance tagging on every output.
+        Every data point carries source URL, collection timestamp, and collection method.
+        No exceptions.
+      </p>
+      <p>
+        <strong>Web tools:</strong> Multi-backend search (SearXNG self-hosted, Brave API,
+        DuckDuckGo) and a page fetcher with optional Tor routing.
+      </p>
+      <p>
+        <strong>Domain recon:</strong> WHOIS with caching, DNS (A/MX/NS/TXT/CNAME + subdomain
+        enumeration), Certificate Transparency log queries via crt.sh, and HTTP-header
+        tech stack fingerprinting.
+      </p>
+      <p>
+        <strong>Social collection tools</strong> for four platforms — all mock-testable, all
+        Tor-routable, all producing the same <code>TrendSignal</code> schema:
+      </p>
+      <ul>
+        <li>
+          <strong>Twitter/X:</strong> collector (query + user), profile, follower/following graph,
+          signal extraction with hashtag velocity and engagement spike detection
+        </li>
+        <li>
+          <strong>Reddit:</strong> subreddit collector (new/rising/top), signal extraction with
+          comment-to-upvote ratio, and <code>community_map</code> — the feeder subreddit tracker
+          that identifies which small communities consistently predict large subreddit content
+          2–8 weeks in advance
+        </li>
+        <li>
+          <strong>Instagram:</strong> public profile, hashtag velocity tracking, reel signal
+          analysis, and location cluster detection (early-adopter accounts tagging the same
+          spot before mainstream — the "spot trend" precursor signal)
+        </li>
+        <li>
+          <strong>TikTok:</strong> hashtag and sound collection, sound velocity tracker (our
+          strongest leading indicator — precedes hashtag trending by 48–96 hours), effect
+          tracker, FYP signal analysis, and micro-creator cohort identification
+        </li>
+      </ul>
+      <p>
+        <strong>Prediction engine:</strong> <code>aggregator.py</code> deduplicates signals
+        by semantic similarity and scores cross-platform coherence. <code>predictor.py</code>
+        produces a <code>TrendPrediction</code> with velocity score, coherence score, saturation
+        estimate, confidence, and an LLM-generated intelligence note. <code>historical_db.py</code>
+        stores predictions in SQLite with outcome tracking. <code>trend_types.py</code>
+        classifies trends into: aesthetic, challenge, sound, phrase, product, location, behavior.
+      </p>
+      <p>
+        <strong>Infrastructure:</strong> InfluxDB compose stack for timeseries signal storage,
+        hourly cron job that writes TrendSignals to InfluxDB across all four platforms,
+        and the full secrets/compose setup documented in the infra repo.
+      </p>
+      <p>
+        <strong>Agent specs:</strong> <code>domain-recon</code>, <code>company-investigator</code>,
+        and <code>trend-scout</code> — each with agent.yaml, full system prompt, tool schema,
+        eval scenarios, and design notes.
+      </p>
+    </section>
+
+    <section>
+      <h2>The prediction architecture in one paragraph</h2>
+      <p>
+        Platform tools collect <code>TrendSignal</code> objects — velocity, platform, confidence,
+        sample content. The aggregator deduplicates signals that are the same trend appearing
+        under slightly different keywords and computes cross-platform coherence (same signal on
+        more platforms = higher coherence = more real). The predictor takes the aggregated signals,
+        computes scores, makes an LLM call for a 2-sentence intelligence note, and returns a
+        <code>TrendPrediction</code>. The historical DB stores it with a UUID so we can record
+        the outcome when the trend goes mainstream. That outcome record is the auditable proof.
+      </p>
+    </section>
+
+    <section>
+      <h2>The design philosophy</h2>
+      <p>
+        <strong>Model-agnostic:</strong> The LLM provider is a runtime config flag
+        (<code>LLM_PROVIDER=anthropic|openai|ollama</code>). Agent specs never hardcode a model name.
+        When models improve, you swap the env var — you don't rewrite agents.
+      </p>
+      <p>
+        <strong>Tor-first for collection:</strong> Every platform tool routes through a SOCKS5 proxy
+        when <code>SOCKS_PROXY</code> is set. Direct-IP collection is allowed only for whitelisted
+        public APIs. This is enforced by design, not by convention.
+      </p>
+      <p>
+        <strong>Legal by design:</strong> Every tool ships with a <code>legal_notes.md</code>.
+        If a tool is only useful for illegal activity, it doesn't ship. The legal notes are
+        part of the public API documentation, not an afterthought.
+      </p>
+      <p>
+        <strong>Evals before merge:</strong> No agent ships without at least 3 eval scenarios.
+        No tool ships without unit tests. The <code>trend-scout</code> agent has 5 scenarios
+        including a manufactured-virality detection case and a private-individual refusal case.
+      </p>
+    </section>
+
+    <section>
+      <h2>What's not here yet</h2>
+      <p>
+        The prediction model is heuristic in v0.1 — the confidence scores are computed from
+        velocity and coherence math, not from a trained model. The trained ML model (Task 3.2
+        in the roadmap) comes after we've collected enough labeled historical data.
+        The current predictor is good enough to start tracking predictions and building the
+        accuracy record. The trained model will improve the scores once we have ground truth.
+      </p>
+      <p>
+        The public API, the enterprise web interface, and the full graph mapper are Phase 3–4
+        items. The open source framework and the agent specs ship first because the architecture
+        decisions compound: every API endpoint, every enterprise feature, and every agent
+        improvement builds on the schema and tool contracts in v0.1.
+      </p>
+    </section>
+
+    <section>
+      <h2>Get started</h2>
+      <div class="code-block">
+        <pre><code>git clone https://github.com/mad-river-ai/osint-framework
+cd osint-framework
+pip install -e .
+export LLM_PROVIDER=anthropic
+export ANTHROPIC_API_KEY=your_key
+
+python3 -c "
+from tools.social.twitter.signal import extract_signal
+from tools.prediction.predictor import predict_trend
+
+signal = extract_signal('dark academia')
+pred = predict_trend([signal])
+print(f'Trend: {pred.keyword}')
+print(f'Confidence: {pred.confidence:.0%}')
+print(f'Intelligence: {pred.intelligence_note}')
+"</code></pre>
+      </div>
+      <p>
+        Full docs in the repo. Issues, PRs, and stars all welcome.
+        Enterprise access and TrendOracle beta at <a href="/enterprise">madriverai.com/enterprise</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .blog-post {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 60px 16px 80px;
+  }
+
+  header { margin-bottom: 48px; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--color-accent, #00e5ff);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+
+  .lede {
+    font-size: 1.1rem;
+    color: #a0aec0;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  section { margin-bottom: 36px; }
+
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: #e2e8f0;
+  }
+
+  p {
+    color: #a0aec0;
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+
+  ul {
+    color: #a0aec0;
+    line-height: 1.7;
+    padding-left: 20px;
+    margin: 0 0 14px;
+  }
+
+  li { margin-bottom: 8px; }
+
+  a { color: var(--color-accent, #00e5ff); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  code {
+    font-family: monospace;
+    font-size: 0.875em;
+    background: rgba(255,255,255,0.08);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #e2e8f0;
+  }
+
+  strong { color: #e2e8f0; }
+
+  .code-block {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 20px;
+    margin: 0 0 16px;
+    overflow-x: auto;
+  }
+
+  .code-block pre { margin: 0; }
+
+  .code-block code {
+    background: none;
+    padding: 0;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: #a0aec0;
+    border-radius: 0;
+  }
+</style>
