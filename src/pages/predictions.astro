@@ -2,9 +2,18 @@
 import Base from "../layouts/Base.astro";
 import predictionsData from "../data/predictions.json";
 
-const { predictions, total_predictions, confirmed_mainstream, pending, missed, last_updated } = predictionsData;
+// Pivot Point 2 gate: nothing renders unless approved by a human AND carries a digest + timestamp proof.
+const isPublishable = (p: any) =>
+  p.review_status === "approved" && Boolean(p.prov_digest) && Boolean(p.timestamp_proof);
 
-const accuracy = total_predictions > 0 && (confirmed_mainstream + missed) > 0
+const { last_updated } = predictionsData;
+const predictions = predictionsData.published ? predictionsData.predictions.filter(isPublishable) : [];
+const total_predictions = predictions.length;
+const confirmed_mainstream = predictions.filter((p) => p.status === "confirmed").length;
+const missed = predictions.filter((p) => p.status === "missed").length;
+const pending = total_predictions - confirmed_mainstream - missed;
+
+const accuracy = (confirmed_mainstream + missed) > 0
   ? Math.round((confirmed_mainstream / (confirmed_mainstream + missed)) * 100)
   : null;
 
@@ -78,6 +87,16 @@ const confidencePct = (c: number) => Math.round(c * 100);
         <span class="last-updated">Last updated: {last_updated}</span>
       </div>
 
+      {predictions.length === 0 && (
+        <div class="review-notice">
+          <h3>First batch in review</h3>
+          <p>
+            Predictions appear here only after human review and a cryptographic timestamp.
+            Nothing is shown until both are done.
+          </p>
+        </div>
+      )}
+
       <div class="predictions-grid">
         {predictions.map((pred) => (
           <article class={`prediction-card ${statusClass(pred.status)}`}>
@@ -137,8 +156,8 @@ const confidencePct = (c: number) => Math.round(c * 100);
         <div class="method-item">
           <h3>How we detect</h3>
           <p>
-            TrendOracle ingests signal streams from Twitter/X, Reddit, Instagram, and TikTok.
-            Each signal is scored by a 5-component ensemble model: Bass diffusion curve fitting,
+            TrendOracle scores signals from Twitter/X, Reddit, Instagram, and TikTok
+            with a 5-component ensemble model: Bass diffusion curve fitting,
             network community modularity, cross-platform temporal lag, velocity profile shape
             matching (DTW), and creator dispersion entropy (CDE — distinguishes organic spread
             from coordinated campaigns).
@@ -147,10 +166,10 @@ const confidencePct = (c: number) => Math.round(c * 100);
         <div class="method-item">
           <h3>When we publish</h3>
           <p>
-            Predictions are published the same day they're generated — before the trend reaches
-            mainstream. We don't cherry-pick retroactively. Each prediction carries an
-            ISO 8601 timestamp and a SHA-256 digest of the prediction content, making
-            post-hoc editing cryptographically detectable.
+            A human reviews every prediction before it appears here. Each published prediction
+            carries an ISO 8601 date, a SHA-256 digest of its content, and an independent
+            timestamp proof, so any later edit is detectable. We don't add predictions
+            retroactively.
           </p>
         </div>
         <div class="method-item">
@@ -176,7 +195,7 @@ const confidencePct = (c: number) => Math.round(c * 100);
     <section class="cta">
       <div class="cta-inner">
         <h2>Get early access to TrendOracle</h2>
-        <p>Enterprise clients receive predictions 48 hours before public publication, with full signal data and confidence breakdowns.</p>
+        <p>TrendOracle is in private beta. Design partners get the signal data and confidence breakdown behind each prediction.</p>
         <a href="mailto:hello@madriverai.com?subject=TrendOracle%20Early%20Access" class="btn-primary">
           Request Early Access
         </a>
@@ -290,6 +309,23 @@ const confidencePct = (c: number) => Math.round(c * 100);
   .last-updated {
     font-size: 0.8rem;
     color: var(--color-text-muted, #888);
+  }
+
+  .review-notice {
+    border: 1px dashed rgba(255, 171, 0, 0.4);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .review-notice h3 {
+    margin: 0 0 0.5rem;
+    color: #ffab00;
+  }
+
+  .review-notice p {
+    margin: 0;
+    color: var(--color-text-secondary, #bbb);
   }
 
   .predictions-grid {
