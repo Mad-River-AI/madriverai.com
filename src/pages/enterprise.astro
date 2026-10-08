@@ -30,32 +30,15 @@ import Base from "../layouts/Base.astro";
     <section class="proof">
       <h2>The Track Record</h2>
       <p class="section-sub">
-        Every prediction is timestamped at creation. Outcomes are recorded when trends hit mainstream.
-        No retroactive claims. No survivorship bias.
+        Every prediction is timestamped the moment it's made. Outcomes are recorded when trends hit
+        mainstream. No retroactive claims. No survivorship bias.
       </p>
-      <div class="prediction-sample">
-        <div class="pred-card pending">
-          <div class="pred-status">PENDING</div>
-          <div class="pred-keyword">cottagecore revival</div>
-          <div class="pred-date">Predicted Oct 7, 2026</div>
-          <div class="pred-eta">ETA: 6–8 weeks</div>
-          <div class="pred-conf">Confidence: 0.78</div>
-        </div>
-        <div class="pred-card pending">
-          <div class="pred-status">PENDING</div>
-          <div class="pred-keyword">analog photography gen z</div>
-          <div class="pred-date">Predicted Oct 7, 2026</div>
-          <div class="pred-eta">ETA: 10–14 weeks</div>
-          <div class="pred-conf">Confidence: 0.65</div>
-        </div>
-        <div class="pred-card placeholder">
-          <div class="pred-status">COMING SOON</div>
-          <div class="pred-keyword">First confirmed predictions will appear here</div>
-          <div class="pred-date">Track record begins Oct 2026</div>
-        </div>
-      </div>
       <p class="track-record-note">
-        Full prediction history with outcomes at <a href="/predictions">madriverai.com/predictions</a> — coming Q1 2027.
+        Each prediction is hashed and anchored to the Bitcoin blockchain through
+        <a href="https://opentimestamps.org" target="_blank" rel="noopener">OpenTimestamps</a>.
+        Clients receive the prediction and its proof file, and can verify the date themselves
+        with the open-source <code>ots</code> tool — no need to trust us.
+        Predictions are shared with clients only, not published.
       </p>
     </section>
 
