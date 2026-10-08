@@ -1,0 +1,512 @@
+---
+import Base from "../layouts/Base.astro";
+import predictionsData from "../data/predictions.json";
+
+const { predictions, total_predictions, confirmed_mainstream, pending, missed, last_updated } = predictionsData;
+
+const accuracy = total_predictions > 0 && (confirmed_mainstream + missed) > 0
+  ? Math.round((confirmed_mainstream / (confirmed_mainstream + missed)) * 100)
+  : null;
+
+const statusLabel = (status: string) => {
+  if (status === "confirmed") return "Confirmed";
+  if (status === "missed") return "Missed";
+  return "Pending";
+};
+
+const statusClass = (status: string) => {
+  if (status === "confirmed") return "status-confirmed";
+  if (status === "missed") return "status-missed";
+  return "status-pending";
+};
+
+const confidencePct = (c: number) => Math.round(c * 100);
+---
+
+<Base
+  title="Predictions — Mad River AI"
+  description="Our trend predictions, dated and auditable. We publish before, not after."
+  ogTitle="Our Predictions"
+  ogSubtitle="Dated. Auditable. On the record."
+  ogEyebrow="TrendOracle"
+>
+  <main class="predictions-page">
+    <section class="hero">
+      <div class="eyebrow">TRENDORACLE — PUBLIC TRACK RECORD</div>
+      <h1>Our predictions.<br /><span class="accent">Dated and auditable.</span></h1>
+      <p class="hero-sub">
+        We publish trend predictions before they happen — with exact dates and cryptographic timestamps.
+        No retroactive claims. No moving goalposts. The record speaks for itself.
+      </p>
+    </section>
+
+    <section class="scoreboard">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-number">{total_predictions}</div>
+          <div class="stat-label">Total Predictions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{confirmed_mainstream}</div>
+          <div class="stat-label">Confirmed Mainstream</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{pending}</div>
+          <div class="stat-label">Pending Outcome</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">{missed}</div>
+          <div class="stat-label">Missed</div>
+        </div>
+        {accuracy !== null && (
+          <div class="stat stat-accent">
+            <div class="stat-number">{accuracy}%</div>
+            <div class="stat-label">Accuracy (resolved)</div>
+          </div>
+        )}
+      </div>
+      <p class="methodology-note">
+        A prediction is "confirmed" when the trend keyword reaches 1M+ social posts/week or appears
+        in mainstream press coverage, within the predicted window. This is independently verifiable.
+        <a href="/predictions#methodology" class="inline-link">Full methodology →</a>
+      </p>
+    </section>
+
+    <section class="predictions-list">
+      <div class="list-header">
+        <h2>All Predictions</h2>
+        <span class="last-updated">Last updated: {last_updated}</span>
+      </div>
+
+      <div class="predictions-grid">
+        {predictions.map((pred) => (
+          <article class={`prediction-card ${statusClass(pred.status)}`}>
+            <div class="card-header">
+              <div class="keyword">{pred.keyword}</div>
+              <div class={`status-badge ${statusClass(pred.status)}`}>
+                {statusLabel(pred.status)}
+              </div>
+            </div>
+
+            <div class="card-meta">
+              <span class="trend-type">{pred.trend_type}</span>
+              <span class="platforms">{pred.platforms.join(", ")}</span>
+            </div>
+
+            <p class="intel-note">{pred.intelligence_note}</p>
+
+            <div class="card-footer">
+              <div class="timing">
+                <div class="timing-item">
+                  <span class="timing-label">Predicted</span>
+                  <span class="timing-value">
+                    {new Date(pred.predicted_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  </span>
+                </div>
+                <div class="timing-item">
+                  <span class="timing-label">Expected mainstream by</span>
+                  <span class="timing-value">
+                    {new Date(pred.predicted_mainstream_by).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                  </span>
+                </div>
+                {pred.mainstream_confirmed_at && (
+                  <div class="timing-item confirmed">
+                    <span class="timing-label">Confirmed</span>
+                    <span class="timing-value">
+                      {new Date(pred.mainstream_confirmed_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div class="confidence-bar-wrap">
+                <span class="conf-label">Model confidence: {confidencePct(pred.confidence)}%</span>
+                <div class="confidence-bar">
+                  <div class="confidence-fill" style={`width: ${confidencePct(pred.confidence)}%`}></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="methodology" id="methodology">
+      <h2>Methodology</h2>
+      <div class="method-grid">
+        <div class="method-item">
+          <h3>How we detect</h3>
+          <p>
+            TrendOracle ingests signal streams from Twitter/X, Reddit, Instagram, and TikTok.
+            Each signal is scored by a 5-component ensemble model: Bass diffusion curve fitting,
+            network community modularity, cross-platform temporal lag, velocity profile shape
+            matching (DTW), and creator dispersion entropy (CDE — distinguishes organic spread
+            from coordinated campaigns).
+          </p>
+        </div>
+        <div class="method-item">
+          <h3>When we publish</h3>
+          <p>
+            Predictions are published the same day they're generated — before the trend reaches
+            mainstream. We don't cherry-pick retroactively. Each prediction carries an
+            ISO 8601 timestamp and a SHA-256 digest of the prediction content, making
+            post-hoc editing cryptographically detectable.
+          </p>
+        </div>
+        <div class="method-item">
+          <h3>What "confirmed" means</h3>
+          <p>
+            A trend is confirmed mainstream when: (a) the keyword reaches 1M+ social posts/week
+            on any single platform, or (b) it appears in editorial coverage from a publication
+            with 500k+ monthly readers. We verify using public platform data and media monitoring.
+            The confirmation date is independently checkable.
+          </p>
+        </div>
+        <div class="method-item">
+          <h3>What "missed" means</h3>
+          <p>
+            A prediction is marked "missed" when the predicted mainstream window closes with
+            no confirmation. We don't extend windows. We don't reclassify misses as "early."
+            A miss is a miss. Publishing misses transparently is how the track record stays credible.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-inner">
+        <h2>Get early access to TrendOracle</h2>
+        <p>Enterprise clients receive predictions 48 hours before public publication, with full signal data and confidence breakdowns.</p>
+        <a href="mailto:hello@madriverai.com?subject=TrendOracle%20Early%20Access" class="btn-primary">
+          Request Early Access
+        </a>
+      </div>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .predictions-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem 4rem;
+  }
+
+  .hero {
+    padding: 5rem 0 3rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted, #888);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .accent {
+    color: var(--color-accent, #00e5ff);
+  }
+
+  .hero-sub {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--color-text-muted, #aaa);
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  /* Scoreboard */
+  .scoreboard {
+    background: var(--color-card-bg, rgba(255,255,255,0.04));
+    border: 1px solid var(--color-border, rgba(255,255,255,0.08));
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .stat {
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .stat-accent .stat-number {
+    color: var(--color-accent, #00e5ff);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #888);
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .methodology-note {
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #888);
+    text-align: center;
+    margin: 0;
+  }
+
+  .inline-link {
+    color: var(--color-accent, #00e5ff);
+    text-decoration: none;
+  }
+
+  /* Predictions list */
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+  }
+
+  .list-header h2 {
+    margin: 0;
+  }
+
+  .last-updated {
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #888);
+  }
+
+  .predictions-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .prediction-card {
+    background: var(--color-card-bg, rgba(255,255,255,0.04));
+    border: 1px solid var(--color-border, rgba(255,255,255,0.08));
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .prediction-card.status-confirmed {
+    border-color: rgba(0, 229, 255, 0.3);
+  }
+
+  .prediction-card.status-missed {
+    border-color: rgba(255, 80, 80, 0.3);
+    opacity: 0.75;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .keyword {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .status-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-badge.status-pending {
+    background: rgba(255, 171, 0, 0.15);
+    color: #ffab00;
+    border: 1px solid rgba(255, 171, 0, 0.3);
+  }
+
+  .status-badge.status-confirmed {
+    background: rgba(0, 229, 255, 0.15);
+    color: #00e5ff;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+  }
+
+  .status-badge.status-missed {
+    background: rgba(255, 80, 80, 0.15);
+    color: #ff6464;
+    border: 1px solid rgba(255, 80, 80, 0.3);
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .intel-note {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary, #bbb);
+    margin-bottom: 1.25rem;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .timing {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .timing-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .timing-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-text-muted, #888);
+  }
+
+  .timing-value {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .timing-item.confirmed .timing-value {
+    color: var(--color-accent, #00e5ff);
+  }
+
+  .confidence-bar-wrap {
+    min-width: 180px;
+  }
+
+  .conf-label {
+    font-size: 0.72rem;
+    color: var(--color-text-muted, #888);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .confidence-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .confidence-fill {
+    height: 100%;
+    background: var(--color-accent, #00e5ff);
+    border-radius: 999px;
+  }
+
+  /* Methodology */
+  .methodology {
+    margin: 4rem 0;
+    padding-top: 3rem;
+    border-top: 1px solid var(--color-border, rgba(255,255,255,0.08));
+  }
+
+  .methodology h2 {
+    margin-bottom: 2rem;
+  }
+
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .method-item h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-accent, #00e5ff);
+  }
+
+  .method-item p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary, #bbb);
+  }
+
+  /* CTA */
+  .cta {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  .cta-inner {
+    background: var(--color-card-bg, rgba(255,255,255,0.04));
+    border: 1px solid var(--color-border, rgba(255,255,255,0.08));
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+  }
+
+  .cta-inner h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-inner p {
+    color: var(--color-text-muted, #888);
+    margin-bottom: 1.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--color-accent, #00e5ff);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.85;
+  }
+
+  @media (max-width: 600px) {
+    .stat-row { gap: 1rem; }
+    .card-footer { flex-direction: column; align-items: flex-start; }
+    .confidence-bar-wrap { width: 100%; }
+  }
+</style>
