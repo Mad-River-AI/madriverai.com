@@ -113,20 +113,21 @@ import Base from "../layouts/Base.astro";
     <section class="open-source">
       <h2>Build Your Own with osint-framework</h2>
       <p>
-        The API will expose what's already in <a href="https://github.com/mad-river-ai/osint-framework" target="_blank" rel="noopener">osint-framework</a> —
-        our open-source Python framework for OSINT tooling. If you need full control or want to self-host,
-        the framework is available today.
+        The API's OSINT tool endpoints come from <a href="https://github.com/mad-river-ai/osint-framework" target="_blank" rel="noopener">osint-framework</a> —
+        our open-source Python framework for OSINT tooling. Trend prediction endpoints are backed by
+        TrendOracle, Mad River's private prediction engine, which is not open source. If you need full
+        control or want to self-host the OSINT tools, the framework is available today.
       </p>
       <div class="code-block">
         <pre><code>pip install osint-framework
 
-from tools.prediction.predictor import predict_trend
-from tools.social.twitter.signal import extract_signal
+from tools.social.tiktok import track_sound
 
-signal = extract_signal("dark academia")
-prediction = predict_trend([signal])
-print(f"Confidence: {'{prediction.confidence:.0%}'}")
-print(f"Est. days to mainstream: {'{prediction.saturation_score:.0f}'}")</code></pre>
+signal = track_sound("&lt;sound_id&gt;")
+print(f"Keyword: &#123;signal.keyword&#125;")
+print(f"Platform: &#123;signal.platform&#125;")
+print(f"Velocity (24h): &#123;signal.velocity_24h&#125;")
+print(f"Confidence: &#123;signal.confidence&#125;")</code></pre>
       </div>
       <a href="https://github.com/mad-river-ai/osint-framework" class="btn-secondary" target="_blank" rel="noopener">
         View on GitHub →

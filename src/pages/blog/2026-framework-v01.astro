@@ -4,14 +4,14 @@ import Base from "../../layouts/Base.astro";
 const title = "osint-framework v0.1 is live";
 const date = "October 7, 2026";
 const description =
-  "We're releasing the core of our OSINT framework: a DAG task runner, domain recon, web search, and the beginnings of the trend prediction engine — 100 tests, 4 social platform tools, and a prediction pipeline that runs today.";
+  "We're releasing the core of our OSINT framework: a DAG task runner, domain recon, web search, and social collectors for four platforms that emit TrendSignals. Scoring and prediction live in TrendOracle, our enterprise product, which is not open source.";
 ---
 
 <Base
   title={title}
   description={description}
   ogTitle={title}
-  ogSubtitle="Four social platforms. One prediction engine."
+  ogSubtitle="Four social platforms. One signal schema."
   ogDate={date}
   ogEyebrow="Blog"
 >
@@ -25,14 +25,13 @@ const description =
     <section>
       <p>
         Today we're open-sourcing the first real version of <a href="https://github.com/mad-river-ai/osint-framework">osint-framework</a> —
-        the Python framework that runs our OSINT agents and trend prediction pipeline.
+        the Python framework that runs our OSINT agents and collects social signals.
       </p>
       <p>
-        This is not a demo. It runs. 100 tests pass. The prediction engine ingests signals
-        from Twitter, Reddit, Instagram, and TikTok, aggregates them, and produces a
-        <code>TrendPrediction</code> with confidence scores, saturation estimates, and an
-        LLM-generated intelligence note. The historical database stores predictions with
-        outcome tracking so the accuracy record is auditable from day one.
+        This is not a demo. It runs. The open-source release includes the core runner, web and
+        domain tools, and collectors for Twitter, Reddit, Instagram, and TikTok that emit
+        <code>TrendSignal</code> objects. Scoring, prediction, and the prediction record live in
+        TrendOracle, our enterprise product, which is not open source.
       </p>
     </section>
 
@@ -80,12 +79,9 @@ const description =
         </li>
       </ul>
       <p>
-        <strong>Prediction engine:</strong> <code>aggregator.py</code> deduplicates signals
-        by semantic similarity and scores cross-platform coherence. <code>predictor.py</code>
-        produces a <code>TrendPrediction</code> with velocity score, coherence score, saturation
-        estimate, confidence, and an LLM-generated intelligence note. <code>historical_db.py</code>
-        stores predictions in SQLite with outcome tracking. <code>trend_types.py</code>
-        classifies trends into: aesthetic, challenge, sound, phrase, product, location, behavior.
+        <strong>Not included:</strong> the prediction engine (aggregation, scoring, and the
+        historical prediction record) is part of TrendOracle, our enterprise product, and is
+        not part of the open-source repo.
       </p>
       <p>
         <strong>Infrastructure:</strong> InfluxDB compose stack for timeseries signal storage,
@@ -100,15 +96,12 @@ const description =
     </section>
 
     <section>
-      <h2>The prediction architecture in one paragraph</h2>
+      <h2>The signal layer in one paragraph</h2>
       <p>
         Platform tools collect <code>TrendSignal</code> objects — velocity, platform, confidence,
-        sample content. The aggregator deduplicates signals that are the same trend appearing
-        under slightly different keywords and computes cross-platform coherence (same signal on
-        more platforms = higher coherence = more real). The predictor takes the aggregated signals,
-        computes scores, makes an LLM call for a 2-sentence intelligence note, and returns a
-        <code>TrendPrediction</code>. The historical DB stores it with a UUID so we can record
-        the outcome when the trend goes mainstream. That outcome record is the auditable proof.
+        sample content — each tagged with provenance. That is where the open-source framework
+        stops. What happens next (aggregation, scoring, and the prediction record) is done by
+        TrendOracle, our private enterprise product.
       </p>
     </section>
 
@@ -139,14 +132,11 @@ const description =
     <section>
       <h2>What's not here yet</h2>
       <p>
-        The prediction model is heuristic in v0.1 — the confidence scores are computed from
-        velocity and coherence math, not from a trained model. The trained ML model (Task 3.2
-        in the roadmap) comes after we've collected enough labeled historical data.
-        The current predictor is good enough to start tracking predictions and building the
-        accuracy record. The trained model will improve the scores once we have ground truth.
+        Prediction is not part of this release. It is delivered through TrendOracle, our
+        enterprise product, and is not open source.
       </p>
       <p>
-        The public API, the enterprise web interface, and the full graph mapper are Phase 3–4
+        The public API, the enterprise web interface, and the full graph mapper are later-stage
         items. The open source framework and the agent specs ship first because the architecture
         decisions compound: every API endpoint, every enterprise feature, and every agent
         improvement builds on the schema and tool contracts in v0.1.
@@ -164,13 +154,11 @@ export ANTHROPIC_API_KEY=your_key
 
 python3 -c "
 from tools.social.twitter.signal import extract_signal
-from tools.prediction.predictor import predict_trend
 
 signal = extract_signal('dark academia')
-pred = predict_trend([signal])
-print(f'Trend: &#123;pred.keyword&#125;')
-print(f'Confidence: &#123;pred.confidence:.0%&#125;')
-print(f'Intelligence: &#123;pred.intelligence_note&#125;')
+print(f'Keyword: &#123;signal.keyword&#125;')
+print(f'Platform: &#123;signal.platform&#125;')
+print(f'Velocity (24h): &#123;signal.velocity_24h&#125;')
 "</code></pre>
       </div>
       <p>

@@ -37,4 +37,4 @@ Agent specs live in git. A change to a system prompt is a version bump with a di
 
 ## What's next
 
-Phase 2 brings the social collection tools — Twitter/X, Reddit, Instagram, TikTok — and the TrendSignal aggregator that becomes the engine for *Trend Oracle*. [Follow along on GitHub](https://github.com/Mad-River-AI/osint-framework).
+Phase 2 brings the social collection tools — Twitter/X, Reddit, Instagram, TikTok — which emit the TrendSignal schema that feeds *Trend Oracle*, our private enterprise product. [Follow along on GitHub](https://github.com/Mad-River-AI/osint-framework).

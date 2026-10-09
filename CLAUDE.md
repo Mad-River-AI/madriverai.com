@@ -1,10 +1,10 @@
 # Mad River AI — madriverai.com
 
 ## 📖 Read the roadmap
-The full strategic roadmap lives at `osint-framework/CLAUDE.md` (and `ROADMAP.md`).
+The full strategic roadmap lives in the private repo `Mad-River-AI/down-stream` at `CLAUDE.md`.
 Current phase and next task are in the **AGENT CONTINUATION PROTOCOL** block at the top of that file.
 
-When starting a session here, check `osint-framework/CLAUDE.md` for `CURRENT_TASK` before doing anything else.
+When starting a session here, check `Mad-River-AI/down-stream` `CLAUDE.md` for `CURRENT_TASK` before doing anything else.
 
 ## 🎯 This repo's role
 Public website for Mad River AI. Stack: Astro 6 + Tailwind CSS v4 + Three.js.
@@ -38,4 +38,4 @@ npm run preview  # preview the build
 - Never push directly to main
 
 ## 🔄 After completing a task
-Update `CURRENT_TASK` in `osint-framework/CLAUDE.md` and append to its `PROGRESS LOG`.
+Update `CURRENT_TASK` and the `PROGRESS LOG` in `Mad-River-AI/down-stream` `CLAUDE.md`.
