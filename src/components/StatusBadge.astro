@@ -1,0 +1,30 @@
+---
+export interface Props {
+  status: "alpha" | "beta" | "live" | "coming-soon";
+}
+
+const { status } = Astro.props;
+
+const labels: Record<string, string> = {
+  "alpha": "alpha",
+  "beta": "beta",
+  "live": "live",
+  "coming-soon": "coming soon",
+};
+
+const colors: Record<string, string> = {
+  "alpha": "text-amber-glow border-amber-glow/40",
+  "beta": "text-river-400 border-river-400/40",
+  "live": "text-green-400 border-green-400/40",
+  "coming-soon": "text-ink-400 border-ink-600",
+};
+---
+
+<span
+  class={`inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider px-2 py-1 rounded border ${colors[status] ?? colors["alpha"]}`}
+>
+  {status !== "coming-soon" && (
+    <span class="w-1.5 h-1.5 rounded-full bg-current opacity-80" />
+  )}
+  {labels[status] ?? status}
+</span>

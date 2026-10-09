@@ -1,0 +1,397 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Trend Oracle — Enterprise"
+  description="Private beta: know what Gen Z is obsessed with 4–12 weeks before it goes mainstream. TrendOracle by Mad River AI."
+  ogTitle="Trend Oracle"
+  ogSubtitle="Private Beta"
+  ogEyebrow="Enterprise"
+>
+  <main class="enterprise-page">
+    <section class="hero">
+      <div class="eyebrow">ENTERPRISE — PRIVATE BETA</div>
+      <h1>
+        <span class="accent">We knew it was coming.</span>
+      </h1>
+      <p class="hero-sub">
+        TrendOracle identifies emerging social media trends 4–12 weeks before they reach
+        mainstream awareness — with dated, auditable predictions.
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:hello@madriverai.com?subject=TrendOracle%20Beta" class="btn-primary">
+          Request Beta Access
+        </a>
+        <span class="beta-note">Limited to 10 design partners. Currently 6 spots remaining.</span>
+      </div>
+    </section>
+
+    <section class="proof">
+      <h2>The Track Record</h2>
+      <p class="section-sub">
+        Every prediction is timestamped the moment it's made. Outcomes are recorded when trends hit
+        mainstream. No retroactive claims. No survivorship bias.
+      </p>
+      <p class="track-record-note">
+        Each prediction is hashed and anchored to the Bitcoin blockchain through
+        <a href="https://opentimestamps.org" target="_blank" rel="noopener">OpenTimestamps</a>.
+        Clients receive the prediction and its proof file, and can verify the date themselves
+        with the open-source <code>ots</code> tool — no need to trust us.
+        Predictions are shared with clients only, not published.
+      </p>
+    </section>
+
+    <section class="signals">
+      <h2>What We Track</h2>
+      <div class="signal-grid">
+        <div class="signal-card">
+          <div class="signal-icon">🎵</div>
+          <h3>TikTok Sound Velocity</h3>
+          <p>Sound adoption precedes hashtag trending by 48–96 hours. We track sounds the moment micro-creators pick them up.</p>
+        </div>
+        <div class="signal-card">
+          <div class="signal-icon">🕸</div>
+          <h3>Cross-Platform Coherence</h3>
+          <p>The same signal appearing independently on TikTok, Reddit, and Instagram within 72 hours = organic. One platform only = manufactured or noise.</p>
+        </div>
+        <div class="signal-card">
+          <div class="signal-icon">🔁</div>
+          <h3>Small→Large Subreddit Flow</h3>
+          <p>Content appears in niche subreddits 2–8 weeks before mainstream spillover. We track the feeder communities that are consistently first.</p>
+        </div>
+        <div class="signal-card">
+          <div class="signal-icon">📍</div>
+          <h3>Instagram Location Clusters</h3>
+          <p>When 3+ early-adopter accounts start tagging the same restaurant or spot before any mega-account notices — that's a spot trend in its first week.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tiers">
+      <h2>Enterprise Tiers</h2>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-name">Professional</div>
+          <div class="tier-price">$999<span>/mo</span></div>
+          <ul>
+            <li>TrendOracle access</li>
+            <li>100k API calls/mo</li>
+            <li>Weekly signal digest</li>
+            <li>Email alerts on high-confidence signals (>0.7)</li>
+            <li>All 4 platforms: Twitter, Reddit, Instagram, TikTok</li>
+          </ul>
+          <a href="mailto:hello@madriverai.com?subject=TrendOracle%20Professional" class="btn-tier">
+            Apply for Beta
+          </a>
+        </div>
+        <div class="tier-card featured">
+          <div class="tier-badge">MOST REQUESTED</div>
+          <div class="tier-name">Enterprise</div>
+          <div class="tier-price">Custom</div>
+          <ul>
+            <li>Everything in Professional</li>
+            <li>Dedicated instance</li>
+            <li>Custom keyword watchlists</li>
+            <li>Raw signal data access</li>
+            <li>SLA + dedicated support</li>
+            <li>Quarterly accuracy review</li>
+          </ul>
+          <a href="mailto:hello@madriverai.com?subject=TrendOracle%20Enterprise" class="btn-tier">
+            Talk to Us
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="use-cases">
+      <h2>Who Uses TrendOracle</h2>
+      <div class="usecase-grid">
+        <div class="usecase">
+          <h3>Marketing Agencies</h3>
+          <p>Brief clients on what's coming, not what's already trending. 8 weeks of lead time changes campaign planning entirely.</p>
+        </div>
+        <div class="usecase">
+          <h3>Influencer Management</h3>
+          <p>Know which sounds, aesthetics, and challenges to position your creators for before they peak. Be first, not fast-follower.</p>
+        </div>
+        <div class="usecase">
+          <h3>Media & Publishing</h3>
+          <p>Assign the story before the trend goes mainstream. Source content from the micro-creators who started it.</p>
+        </div>
+        <div class="usecase">
+          <h3>Consumer Brands</h3>
+          <p>Product launches and campaigns timed to trend cycles rather than reacting to them after the fact.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-bottom">
+      <h2>Join the Beta</h2>
+      <p>10 design partner slots. We work closely with beta clients to validate predictions against their specific use cases.</p>
+      <a href="mailto:hello@madriverai.com?subject=TrendOracle%20Beta%20Interest" class="btn-primary">
+        hello@madriverai.com
+      </a>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .enterprise-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--color-accent, #00e5ff);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 20px;
+  }
+
+  .accent { color: var(--color-accent, #00e5ff); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: #a0aec0;
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--color-accent, #00e5ff);
+    color: #020714;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .beta-note {
+    font-size: 0.85rem;
+    color: #718096;
+  }
+
+  section {
+    padding: 60px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 12px;
+  }
+
+  .section-sub {
+    color: #a0aec0;
+    max-width: 600px;
+    margin: 0 0 32px;
+    line-height: 1.6;
+  }
+
+  .prediction-sample {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 0 0 20px;
+  }
+
+  .pred-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .pred-card.pending { border-color: rgba(0,229,255,0.3); }
+  .pred-card.placeholder { opacity: 0.5; }
+
+  .pred-status {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--color-accent, #00e5ff);
+    margin-bottom: 8px;
+  }
+
+  .pred-keyword {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: lowercase;
+  }
+
+  .pred-date, .pred-eta, .pred-conf {
+    font-size: 0.8rem;
+    color: #718096;
+    margin-top: 4px;
+  }
+
+  .track-record-note {
+    font-size: 0.85rem;
+    color: #718096;
+  }
+
+  .track-record-note a { color: var(--color-accent, #00e5ff); }
+
+  .signal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .signal-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 24px;
+  }
+
+  .signal-icon { font-size: 1.5rem; margin-bottom: 12px; }
+  .signal-card h3 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; }
+  .signal-card p { font-size: 0.875rem; color: #a0aec0; line-height: 1.5; margin: 0; }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .tier-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 32px;
+    position: relative;
+  }
+
+  .tier-card.featured {
+    border-color: rgba(0,229,255,0.4);
+    background: rgba(0,229,255,0.04);
+  }
+
+  .tier-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent, #00e5ff);
+    color: #020714;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .tier-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .tier-price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-accent, #00e5ff);
+    margin-bottom: 24px;
+  }
+
+  .tier-price span { font-size: 1rem; font-weight: 400; color: #718096; }
+
+  .tier-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+  }
+
+  .tier-card li {
+    font-size: 0.875rem;
+    color: #a0aec0;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .tier-card li::before {
+    content: "✓ ";
+    color: var(--color-accent, #00e5ff);
+    font-weight: 700;
+  }
+
+  .btn-tier {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid var(--color-accent, #00e5ff);
+    color: var(--color-accent, #00e5ff);
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .btn-tier:hover {
+    background: var(--color-accent, #00e5ff);
+    color: #020714;
+  }
+
+  .usecase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
+  .usecase h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: var(--color-accent, #00e5ff);
+  }
+
+  .usecase p {
+    font-size: 0.875rem;
+    color: #a0aec0;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cta-bottom {
+    text-align: center;
+  }
+
+  .cta-bottom p {
+    color: #a0aec0;
+    max-width: 500px;
+    margin: 0 auto 24px;
+  }
+</style>

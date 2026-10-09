@@ -1,0 +1,366 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="API — Mad River AI"
+  description="The Mad River AI API gives you programmatic access to OSINT tools and trend prediction signals. Coming Phase 3."
+  ogTitle="Mad River AI API"
+  ogSubtitle="Developer Access — Coming 2027"
+  ogEyebrow="API"
+>
+  <main class="api-page">
+    <section class="hero">
+      <div class="eyebrow">API — COMING 2027</div>
+      <h1>Build on <span class="accent">real intelligence.</span></h1>
+      <p class="hero-sub">
+        Programmatic access to OSINT tools, trend signals, and prediction data.
+        Integrate Mad River AI capabilities into your own products and workflows.
+      </p>
+    </section>
+
+    <section class="status-banner">
+      <div class="status-card">
+        <div class="status-dot"></div>
+        <div>
+          <strong>Phase 3 Feature</strong>
+          <p>The public API launches after the TrendOracle enterprise beta validates the prediction model. Targeting Q2 2027.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="preview">
+      <h2>What the API Will Expose</h2>
+      <div class="endpoint-list">
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/v1/trends/signals</span>
+          <span class="desc">Live TrendSignal stream across all platforms</span>
+        </div>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/v1/trends/predict</span>
+          <span class="desc">Submit signals, receive TrendPrediction with confidence scores</span>
+        </div>
+        <div class="endpoint">
+          <span class="method get">GET</span>
+          <span class="path">/v1/trends/history</span>
+          <span class="desc">Historical predictions with confirmed outcomes</span>
+        </div>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/v1/osint/domain</span>
+          <span class="desc">Domain intelligence: WHOIS, DNS, cert history, tech stack</span>
+        </div>
+        <div class="endpoint">
+          <span class="method post">POST</span>
+          <span class="path">/v1/osint/search</span>
+          <span class="desc">Multi-backend web search with provenance tagging</span>
+        </div>
+        <div class="endpoint coming-soon">
+          <span class="method get">GET</span>
+          <span class="path">/v1/social/twitter/signal</span>
+          <span class="desc">Twitter trend signal for a keyword</span>
+        </div>
+        <div class="endpoint coming-soon">
+          <span class="method get">GET</span>
+          <span class="path">/v1/social/tiktok/sound</span>
+          <span class="desc">TikTok sound velocity tracking</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="tiers">
+      <h2>Planned API Tiers</h2>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">$0</div>
+          <ul>
+            <li>10 trend predictions/mo</li>
+            <li>100 OSINT lookups/mo</li>
+            <li>Public endpoints only</li>
+            <li>Community support</li>
+          </ul>
+          <div class="tier-cta-label">On waitlist</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name">Developer</div>
+          <div class="tier-price">$99<span>/mo</span></div>
+          <ul>
+            <li>500 trend predictions/mo</li>
+            <li>10k OSINT lookups/mo</li>
+            <li>All platform signal endpoints</li>
+            <li>Webhooks for high-confidence alerts</li>
+          </ul>
+          <div class="tier-cta-label">On waitlist</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name">Production</div>
+          <div class="tier-price">$499<span>/mo</span></div>
+          <ul>
+            <li>Unlimited predictions</li>
+            <li>100k OSINT lookups/mo</li>
+            <li>Raw signal data access</li>
+            <li>99.9% SLA</li>
+            <li>Priority support</li>
+          </ul>
+          <div class="tier-cta-label">On waitlist</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="open-source">
+      <h2>Build Your Own with osint-framework</h2>
+      <p>
+        The API's OSINT tool endpoints come from <a href="https://github.com/mad-river-ai/osint-framework" target="_blank" rel="noopener">osint-framework</a> —
+        our open-source Python framework for OSINT tooling. Trend prediction endpoints are backed by
+        TrendOracle, Mad River's private prediction engine, which is not open source. If you need full
+        control or want to self-host the OSINT tools, the framework is available today.
+      </p>
+      <div class="code-block">
+        <pre><code>pip install osint-framework
+
+from tools.social.tiktok import track_sound
+
+signal = track_sound("&lt;sound_id&gt;")
+print(f"Keyword: &#123;signal.keyword&#125;")
+print(f"Platform: &#123;signal.platform&#125;")
+print(f"Velocity (24h): &#123;signal.velocity_24h&#125;")
+print(f"Confidence: &#123;signal.confidence&#125;")</code></pre>
+      </div>
+      <a href="https://github.com/mad-river-ai/osint-framework" class="btn-secondary" target="_blank" rel="noopener">
+        View on GitHub →
+      </a>
+    </section>
+
+    <section class="waitlist">
+      <h2>Join the API Waitlist</h2>
+      <p>
+        We notify waitlist members first when the API enters beta. Enterprise integrations
+        can request early access via the enterprise page.
+      </p>
+      <a href="mailto:api@madriverai.com?subject=API%20Waitlist" class="btn-primary">
+        Join Waitlist — api@madriverai.com
+      </a>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .api-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .hero {
+    padding: 80px 0 40px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--color-accent, #00e5ff);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 700;
+    margin: 0 0 20px;
+  }
+
+  .accent { color: var(--color-accent, #00e5ff); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: #a0aec0;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  section {
+    padding: 48px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  h2 {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 700;
+    margin: 0 0 24px;
+  }
+
+  .status-banner { padding: 32px 0; }
+
+  .status-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background: rgba(255, 171, 0, 0.06);
+    border: 1px solid rgba(255, 171, 0, 0.3);
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffab00;
+    margin-top: 6px;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .status-card strong { color: #ffab00; display: block; margin-bottom: 4px; }
+  .status-card p { color: #a0aec0; margin: 0; font-size: 0.9rem; line-height: 1.5; }
+
+  .endpoint-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .endpoint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 14px 16px;
+    flex-wrap: wrap;
+  }
+
+  .endpoint.coming-soon { opacity: 0.5; }
+
+  .method {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .method.get { background: rgba(0,229,255,0.15); color: #00e5ff; }
+  .method.post { background: rgba(255,171,0,0.15); color: #ffab00; }
+
+  .path {
+    font-family: monospace;
+    font-size: 0.875rem;
+    color: #e2e8f0;
+    flex-shrink: 0;
+  }
+
+  .desc {
+    font-size: 0.8rem;
+    color: #718096;
+    margin-left: auto;
+  }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .tier-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 28px;
+  }
+
+  .tier-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+
+  .tier-price {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-accent, #00e5ff);
+    margin-bottom: 20px;
+  }
+
+  .tier-price span { font-size: 0.9rem; font-weight: 400; color: #718096; }
+
+  .tier-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+
+  .tier-card li {
+    font-size: 0.825rem;
+    color: #a0aec0;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .tier-card li::before { content: "✓ "; color: var(--color-accent, #00e5ff); font-weight: 700; }
+
+  .tier-cta-label {
+    font-size: 0.8rem;
+    color: #718096;
+    text-align: center;
+    font-style: italic;
+  }
+
+  .open-source p {
+    color: #a0aec0;
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+
+  .open-source a[href*="github"] { color: var(--color-accent, #00e5ff); }
+
+  .code-block {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 20px;
+    margin: 0 0 20px;
+    overflow-x: auto;
+  }
+
+  .code-block pre { margin: 0; }
+  .code-block code { font-family: monospace; font-size: 0.825rem; color: #a0aec0; line-height: 1.6; }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 10px 24px;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #e2e8f0;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color 0.15s;
+  }
+
+  .btn-secondary:hover { border-color: var(--color-accent, #00e5ff); color: var(--color-accent, #00e5ff); }
+
+  .waitlist { text-align: center; }
+  .waitlist p { color: #a0aec0; max-width: 480px; margin: 0 auto 24px; line-height: 1.6; }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--color-accent, #00e5ff);
+    color: #020714;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  @media (max-width: 600px) {
+    .desc { display: none; }
+  }
+</style>
